@@ -1,0 +1,31 @@
+// Nothing to do with generics
+
+const addOne = (a: number): number => {
+	return a + 1;
+};
+const addTwo = (a: number): number => {
+	return a + 2;
+};
+const addThree = (a: number): number => {
+	return a + 3;
+};
+const add = (a: number, b: number): number => {
+	return a + b;
+};
+
+// generics
+class HoldNumber {
+	data: number = 0;
+}
+class HoldString {
+	data: string = '';
+}
+class HoldAny<T> {
+	data: T | undefined;
+}
+
+const holdNumber = new HoldAny<number>();
+holdNumber.data = 123;
+
+const holdString = new HoldAny<string>();
+holdString.data = 'string';
