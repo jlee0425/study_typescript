@@ -5,6 +5,10 @@ export class Attributes<T> {
 		return this.props[key];
 	};
 
+	getAll = (): T => {
+		return this.props;
+	};
+
 	set = (update: T): void => {
 		Object.assign(this.props, update);
 	};
