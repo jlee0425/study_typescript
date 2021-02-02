@@ -1,7 +1,7 @@
-import { AxiosResponse } from 'axios';
-import { Attributes } from './Attributes';
+import { ApiSync } from './ApiSync';
 import { Events } from './Events';
-import { Sync } from './Sync';
+import { Attributes } from './Attributes';
+import { Model } from './Model';
 
 export interface UserProps {
 	id?: number;
@@ -11,62 +11,20 @@ export interface UserProps {
 
 const rootUrl = 'http://localhost:3000/users';
 
-export class User {
-	events: Events = new Events();
-	sync: Sync<UserProps> = new Sync<UserProps>(rootUrl);
-	attributes: Attributes<UserProps>;
-
-	constructor(attrs: UserProps) {
-		this.attributes = new Attributes<UserProps>(attrs);
-	}
-
-	// passthrough without accessor
-	// NOT IDEAL
-	// on(eventName: string, callback: Callback): void {
-	// 	this.events.on(eventName, callback);
-	// }
-
-	// correct passthrough ->
-	// getter does not call the function just pass the reference to the correct function.
-	get on() {
-		return this.events.on;
-	}
-
-	get trigger() {
-		return this.events.trigger;
-	}
-
-	get get() {
-		return this.attributes.get;
-	}
-
-	set(update: UserProps): void {
-		this.attributes.set(update);
-		this.events.trigger('change');
-	}
-
-	fetch(): void {
-		const id = this.attributes.get('id');
-		if (typeof id !== 'number') throw new Error('Cannot fetch without an ID');
-
-		this.sync
-			.fetch(id)
-			.then((response: AxiosResponse): void => {
-				this.set(response.data);
-			})
-			.catch(() => {
-				this.trigger('error');
-			});
-	}
-
-	save(): void {
-		this.sync
-			.save(this.attributes.getAll())
-			.then((response: AxiosResponse): void => {
-				this.events.trigger('save');
-			})
-			.catch(() => {
-				this.trigger('error');
-			});
+export class User extends Model<UserProps> {
+	static buildUser(attrs: UserProps): User {
+		return new User(
+			new Attributes<UserProps>(attrs),
+			new Events(),
+			new ApiSync<UserProps>(rootUrl),
+		);
 	}
 }
+// passthrough without accessor
+// NOT IDEAL
+// on(eventName: string, callback: Callback): void {
+// 	this.events.on(eventName, callback);
+// }
+
+// correct passthrough ->
+// getter does not call the function just pass the reference to the correct function.
