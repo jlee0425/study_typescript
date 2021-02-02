@@ -7,3 +7,14 @@ user.events.on('change', () => {
 });
 
 user.events.trigger('change');
+
+class Person {
+	constructor(public firstName: string, public lastName: string) {}
+
+	get fullName(): string {
+		return `${this.firstName} ${this.lastName}`;
+	}
+}
+
+const person = new Person('fn', 'ln');
+console.log(person.fullName);

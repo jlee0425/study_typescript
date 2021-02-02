@@ -1,5 +1,3 @@
-import { UserProps } from './User';
-
 export class Attributes<T> {
 	constructor(private props: T) {}
 
@@ -12,10 +10,10 @@ export class Attributes<T> {
 	}
 }
 
-const attrs = new Attributes<UserProps>({ id: 5, name: 'asdf', age: 20 });
-const name = attrs.get('name'); // string
-const age = attrs.get('age'); // number
-const id = attrs.get('id'); // number
+// const attrs = new Attributes<UserProps>({ id: 5, name: 'asdf', age: 20 });
+// const name = attrs.get('name'); // string
+// const age = attrs.get('age'); // number
+// const id = attrs.get('id'); // number
 
 /**
  * In JS(TS), object keys are strings.
