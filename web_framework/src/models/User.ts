@@ -18,4 +18,24 @@ export class User {
 	constructor(attrs: UserProps) {
 		this.attributes = new Attributes<UserProps>(attrs);
 	}
+
+	// passthrough without accessor
+	// NOT IDEAL
+	// on(eventName: string, callback: Callback): void {
+	// 	this.events.on(eventName, callback);
+	// }
+
+	// correct passthrough ->
+	// getter does not call the function just pass the reference to the correct function.
+	get on() {
+		return this.events.on;
+	}
+
+	get trigger() {
+		return this.events.trigger;
+	}
+
+	get get() {
+		return this.attributes.get;
+	}
 }

@@ -1,13 +1,13 @@
 export class Attributes<T> {
 	constructor(private props: T) {}
 
-	get<K extends keyof T>(key: K): T[K] {
+	get = <K extends keyof T>(key: K): T[K] => {
 		return this.props[key];
-	}
+	};
 
-	set(update: T): void {
+	set = (update: T): void => {
 		Object.assign(this.props, update);
-	}
+	};
 }
 
 // const attrs = new Attributes<UserProps>({ id: 5, name: 'asdf', age: 20 });
