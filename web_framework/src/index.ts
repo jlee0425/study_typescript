@@ -1,17 +1,8 @@
-import { User } from './models/User';
+import { Collection } from './models/Collection';
 
-const user = User.buildUser({ id: 1, name: 'Runa' });
+const collection = new Collection('http://localhost:3000/users');
 
-user.on('change', () => {
-	console.log('User info changed.');
-	console.log(user.getAll());
+collection.on('change', () => {
+	console.log(collection.models);
 });
-user.on('save', () => {
-	console.log('User info saved.');
-	console.log(user.getAll());
-});
-
-user.set({ age: 28 });
-user.set({ name: 'Fujita Runa' });
-user.set({ age: 27 });
-user.save();
+collection.fetch();
