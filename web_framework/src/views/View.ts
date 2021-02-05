@@ -31,6 +31,7 @@ export abstract class View<T extends Model<K>, K> {
 			});
 		});
 	}
+
 	mapRegions(fragement: DocumentFragment): void {
 		const regionMap = this.regionMap();
 		Object.keys(regionMap).forEach((region: string) => {
@@ -42,12 +43,19 @@ export abstract class View<T extends Model<K>, K> {
 			}
 		});
 	}
+
+	onRender(): void {}
+
 	render(): void {
 		this.parent.innerHTML = '';
+
 		const el = document.createElement('template');
 		el.innerHTML = this.template();
+
 		this.bindEvents(el.content);
 		this.mapRegions(el.content);
+
+		this.onRender();
 		this.parent.appendChild(el.content);
 	}
 }
