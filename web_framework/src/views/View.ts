@@ -1,12 +1,20 @@
-import { User } from '../models/User';
+import { Model } from './../models/Model';
 
-export abstract class View<T> {
+export abstract class View<T extends Model<K>, K> {
+	regions: { [key: string]: Element } = {};
+
 	constructor(public parent: Element, public model: T) {
 		this.bindModel();
 	}
 
-	abstract eventsMap(): { [key: string]: () => void };
 	abstract template(): string;
+
+	eventMap(): { [key: string]: () => void } {
+		return {};
+	}
+	regionMap(): { [key: string]: string } {
+		return {};
+	}
 
 	bindModel(): void {
 		this.model.on('change', () => {
@@ -15,7 +23,7 @@ export abstract class View<T> {
 	}
 
 	bindEvents(fragment: DocumentFragment): void {
-		const eventsMap = this.eventsMap();
+		const eventsMap = this.eventMap();
 		Object.keys(eventsMap).forEach((key: string) => {
 			const [eventName, selector] = key.split(':');
 			fragment.querySelectorAll(selector).forEach((el) => {
@@ -23,12 +31,23 @@ export abstract class View<T> {
 			});
 		});
 	}
+	mapRegions(fragement: DocumentFragment): void {
+		const regionMap = this.regionMap();
+		Object.keys(regionMap).forEach((region: string) => {
+			const selector = regionMap[region];
+			const el = fragement.querySelector(selector);
 
+			if (el) {
+				this.regions[region] = el;
+			}
+		});
+	}
 	render(): void {
 		this.parent.innerHTML = '';
 		const el = document.createElement('template');
 		el.innerHTML = this.template();
 		this.bindEvents(el.content);
+		this.mapRegions(el.content);
 		this.parent.appendChild(el.content);
 	}
 }
