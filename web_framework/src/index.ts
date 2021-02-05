@@ -1,13 +1,21 @@
-import { User } from './models/User';
 import { UserBox } from './views/UserBox';
-import { UserForm } from './views/UserForm';
+import { User, UserProps } from './models/User';
+import { Collection } from './models/Collection';
+import { UserList } from './views/UserList';
 
-const user = User.buildUser({ name: 'Runa', age: 27 });
-const root = document.getElementById('root');
-if (root) {
-	const userBox = new UserBox(root, user);
-	console.log(userBox);
-	userBox.render();
-} else {
-	throw new Error('root element not found.');
-}
+const users = User.buildUserCollection();
+users.on('change', () => {
+	const root = document.getElementById('root');
+	if (root) {
+		new UserBox(root, User.buildUser({})).render();
+		new UserList(root, users).render();
+	}
+});
+users.on('save', () => {
+	const root = document.getElementById('root');
+	if (root) {
+		new UserBox(root, User.buildUser({})).render();
+		new UserList(root, users).render();
+	}
+});
+users.fetch();
