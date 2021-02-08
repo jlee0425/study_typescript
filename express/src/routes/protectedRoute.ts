@@ -10,8 +10,10 @@ const requireAuth = (req: Request, res: Response, next: NextFunction): void => {
 	res.send('Not Permitted');
 };
 
-export const protectedRoute = Router();
+const protectedRoute = Router();
 
 protectedRoute.get('/protected', requireAuth, (req: Request, res: Response) => {
 	res.send('Welcome to protected route.');
 });
+
+export { protectedRoute };

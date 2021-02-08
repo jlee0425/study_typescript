@@ -1,4 +1,4 @@
-import { Router, Request, Response, NextFunction } from 'express';
+import { Request, Response, Router } from 'express';
 
 interface RequestWithBody extends Request {
 	body: { [key: string]: string | undefined };
@@ -39,3 +39,13 @@ loginRouter.post('/login', (req: RequestWithBody, res: Response) => {
 });
 
 export { loginRouter };
+
+/**
+ * Metadata
+ *
+ * Proposed feature to be added to JS(TS)
+ * Snippets of info that can be tied to a method, property, or class definition
+ * Can be used to super custom stuff
+ * TS will (optionally) provide type information as metadata
+ * Read and write using the `reflect-metadata` package
+ */
