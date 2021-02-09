@@ -32,8 +32,8 @@ function markFunction(secretInfo: string) {
 }
 
 function printMetadata(target: typeof Plane) {
-	for(let key in target.prototype) {
+	for (let key in target.prototype) {
 		const secret = Reflect.getMetadata('secret', target.prototype, key);
 		console.log(secret);
-	});
+	}
 }

@@ -1,6 +1,7 @@
+import { AppRouter } from './../AppRouter';
 import { Router } from 'express';
 
-const logoutRouter = Router();
+const logoutRouter = AppRouter.getInstance();
 
 logoutRouter.get('/logout', (req, res) => {
 	req.session = undefined;

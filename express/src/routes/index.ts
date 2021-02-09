@@ -1,12 +1,12 @@
-import { protectedRoute } from './protectedRoute';
-import { logoutRouter } from './logoutRoute';
-import { Router } from 'express';
-import { loginRouter } from './loginRoute';
-import { rootRouter } from './rootRoute';
+// import { AppRouter } from './../AppRouter';
+// import { loginRouter } from './loginRoute';
+// import { logoutRouter } from './logoutRoute';
+// import { protectedRoute } from './protectedRoute';
+// import { rootRouter } from './rootRoute';
 
-export const router = Router();
+// const router = AppRouter.getInstance();
 
-router.use(loginRouter);
-router.use(logoutRouter);
-router.use(protectedRoute);
-router.use(rootRouter);
+// router.use(loginRouter);
+// router.use(logoutRouter);
+// router.use(protectedRoute);
+// router.use(rootRouter);

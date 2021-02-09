@@ -1,6 +1,7 @@
+import { AppRouter } from './../AppRouter';
 import { Router, Request, Response } from 'express';
 
-const rootRouter = Router();
+const rootRouter = AppRouter.getInstance();
 
 rootRouter.get('/', (req: Request, res: Response) => {
 	if (req.session?.loggedIn) {

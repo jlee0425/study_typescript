@@ -1,30 +1,15 @@
 import { Request, Response, Router } from 'express';
+import { AppRouter } from '../AppRouter';
 
 interface RequestWithBody extends Request {
 	body: { [key: string]: string | undefined };
 }
 
-const loginRouter = Router();
+const router = AppRouter.getInstance();
 
-loginRouter.get('/login', (req: Request, res: Response) => {
-	res.send(`
-		<form method='post'>
-			<div>
-				<label>Email</label>
-				<input name="email" />
-			</div>
-			<div>
-				<label>Password</label>
-				<input name="password" type="password" />
-			</div>
-			<button>Submit</button>
-		</form>
-	`);
-});
-
-loginRouter.post('/login', (req: RequestWithBody, res: Response) => {
+router.post('/login', (req: RequestWithBody, res: Response) => {
 	const { email, password } = req.body;
-
+	console.log(email, password);
 	if (
 		email &&
 		password &&
@@ -37,8 +22,6 @@ loginRouter.post('/login', (req: RequestWithBody, res: Response) => {
 		res.send('Invalid email or password');
 	}
 });
-
-export { loginRouter };
 
 /**
  * Metadata
