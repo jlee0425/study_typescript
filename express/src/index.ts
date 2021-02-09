@@ -2,7 +2,7 @@ import { AppRouter } from './AppRouter';
 import bodyParser from 'body-parser';
 import cookieSession from 'cookie-session';
 import express from 'express';
-import './controllers/LoginController';
+import './controllers';
 
 const app = express();
 const router = AppRouter.getInstance();
