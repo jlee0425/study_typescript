@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { fetchTodos, deleteTodo, Todo } from '../actions';
 import { StoreState } from '../reducers';
@@ -8,9 +8,18 @@ interface AppProps {
 	fetchTodos: Function;
 	deleteTodo: typeof deleteTodo;
 }
+const App: React.FC<AppProps> = (props: AppProps) => {
+	const [isFetching, setIsFetching] = useState(false);
+	const fetched = props.todos.length === 200;
 
-const App: React.FC<AppProps> = (props) => {
+	useEffect(() => {
+		if (props.todos.length !== 0) {
+			setIsFetching(false);
+		}
+	}, [props.todos.length]);
+
 	const fetchTodos = (): void => {
+		setIsFetching(true);
 		props.fetchTodos();
 	};
 
@@ -32,8 +41,8 @@ const App: React.FC<AppProps> = (props) => {
 	return (
 		<div>
 			<h1>Todo App</h1>
-			<button onClick={fetchTodos}>Fetch</button>
-			{renderList()}
+			{fetched || <button onClick={fetchTodos}>Fetch</button>}
+			{isFetching ? <div>Fetching</div> : renderList()}
 		</div>
 	);
 };
